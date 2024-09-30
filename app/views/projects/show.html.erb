@@ -4,4 +4,9 @@
 <h2>Current Status: <%= @project.status %></h2>
 
 
+<h2>Comments</h2>
+<%= render @project.comments %>
+
+<%= render 'comments/form' %>
+
 <%= link_to 'All Projects', projects_path %>

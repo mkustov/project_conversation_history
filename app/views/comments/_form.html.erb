@@ -1,0 +1,6 @@
+<%= simple_form_for [@project, @comment] do |f| %>
+  <%= f.error_notification %>
+
+  <%= f.input :body, label: 'Leave a comment' %>
+  <%= f.button :submit %>
+<% end %>
