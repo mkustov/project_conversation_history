@@ -92,4 +92,76 @@ RSpec.describe ProjectsController, type: :controller do
       end
     end
   end
+
+  describe 'PATCH #update' do
+    let(:project) { Project.create(title: 'The Crystal', description: 'Experiment', status: from_status) }
+    let(:user) { User.create(email: 'gordon@blackmesa.com', password: 'HalfLife3') }
+    let(:from_status) { Project::VALID_STATUSES.first }
+    let(:to_status) { Project::VALID_STATUSES.last }
+    let(:status_change_params) { { status: to_status } }
+
+    subject { patch :update, params: { id: project.id, project: status_change_params } }
+
+    context 'when user is signed in' do
+      before { sign_in user }
+
+      context 'with valid attributes' do
+        it 'updates the project status' do
+          subject
+          expect(project.reload.status).to eq(to_status)
+        end
+
+        it 'redirects to the project show page' do
+          subject
+          expect(response).to redirect_to(project_path(project))
+        end
+
+        it 'create status change record' do
+          expect { subject }
+            .to change { StatusChange.all }
+            .from([])
+            .to(a_collection_containing_exactly(
+                  an_object_having_attributes(
+                    project: project,
+                    user: user,
+                    from_status: from_status,
+                    to_status: to_status
+                  )
+                ))
+        end
+      end
+
+      context 'with invalid attributes' do
+        let(:status_change_params) { { status: 'Invalid Status' } }
+
+        it 'does not update the project status' do
+          expect { subject }.to_not(change { project.reload.status })
+        end
+
+        it 'redirects to the project show page' do
+          subject
+          expect(response).to redirect_to(project_path(project))
+        end
+
+        it 'does not create status change record' do
+          expect { subject }.to_not(change { StatusChange.count })
+        end
+      end
+    end
+
+    context 'when user is not signed in' do
+      it 'redirects to the sign in page' do
+        subject
+        expect(response).to redirect_to(new_user_session_path)
+      end
+
+      it 'does not update the project status' do
+        expect { subject }.to_not(change { project.reload.status })
+      end
+
+      it 'does not create status change record' do
+        expect { subject }.to_not(change { StatusChange.count })
+      end
+    end
+  end
 end

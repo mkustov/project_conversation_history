@@ -1,7 +1,12 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe StatusChange, type: :model do
-  let(:status_change) { StatusChange.new(user: user, project: project, from_status: Project::VALID_STATUSES.first, to_status: Project::VALID_STATUSES.last) }
+  let(:status_change) do
+    StatusChange.new(user: user, project: project, from_status: Project::VALID_STATUSES.first,
+                     to_status: Project::VALID_STATUSES.last)
+  end
   let(:project) { Project.create(title: 'The Matrix', description: 'Find Neo', status: Project::VALID_STATUSES.first) }
   let(:user) { User.create(email: 'morpheus@matrix.com', password: 'RedPill') }
 

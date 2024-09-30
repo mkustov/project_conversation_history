@@ -9,4 +9,5 @@ class Project < ApplicationRecord
   validates :status, inclusion: { in: VALID_STATUSES }
 
   has_many :comments, dependent: :destroy
+  has_many :status_changes, dependent: :destroy
 end

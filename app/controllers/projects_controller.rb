@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class ProjectsController < ApplicationController
+  before_action :authenticate_user!, only: %i[update]
   before_action :set_project, only: %i[show update]
 
   def index
@@ -25,7 +26,18 @@ class ProjectsController < ApplicationController
     @comment = Comment.new
   end
 
-  def update; end
+  def update
+    updater_service = Services::Project::StatusUpdater.new(project: @project,
+                                                           user: current_user,
+                                                           from_status: @project.status,
+                                                           to_status: project_params[:status])
+
+    if updater_service.call
+      redirect_to @project, notice: 'Project status was successfully updated.'
+    else
+      redirect_to @project, alert: 'Project status was not updated.'
+    end
+  end
 
   private
 

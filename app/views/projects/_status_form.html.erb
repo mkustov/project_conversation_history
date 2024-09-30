@@ -1,0 +1,6 @@
+<%= simple_form_for @project do |f| %>
+  <%= f.error_notification %>
+
+  <%= f.input :status, collection: Project::VALID_STATUSES %>
+  <%= f.button :submit %>
+<% end %>
