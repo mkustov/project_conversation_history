@@ -1,8 +1,12 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Project, type: :model do
-  let(:project) { Project.new(title: 'The Tumbler', description: 'All-terrain vehicle', status: described_class::VALID_STATUSES.first) }
-  
+  let(:project) do
+    Project.new(title: 'The Tumbler', description: 'All-terrain vehicle', status: described_class::VALID_STATUSES.first)
+  end
+
   it 'is valid with valid attributes' do
     expect(project).to be_valid
   end

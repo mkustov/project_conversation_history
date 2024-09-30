@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 class CommentsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_project, only: [:create]
-  
+
   def create
     @comment = @project.comments.build(comment_params)
     @comment.user = current_user

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe ProjectsController, type: :controller do
@@ -11,8 +13,10 @@ RSpec.describe ProjectsController, type: :controller do
   end
 
   describe 'GET #new' do
-    let(:project) { Project.create(title: 'The Tumbler', description: 'All-terrain vehicle', status: Project::VALID_STATUSES.first) }
-    
+    let(:project) do
+      Project.create(title: 'The Tumbler', description: 'All-terrain vehicle', status: Project::VALID_STATUSES.first)
+    end
+
     it 'returns a success response' do
       get :new, params: { id: project.id }
       expect(response).to be_successful
@@ -26,8 +30,10 @@ RSpec.describe ProjectsController, type: :controller do
 
   describe 'GET #show' do
     context 'when id is valid' do
-      let(:project) { Project.create(title: 'The Tumbler', description: 'All-terrain vehicle', status: Project::VALID_STATUSES.first) }
-      
+      let(:project) do
+        Project.create(title: 'The Tumbler', description: 'All-terrain vehicle', status: Project::VALID_STATUSES.first)
+      end
+
       it 'returns a success response' do
         get :show, params: { id: project.id }
         expect(response).to be_successful
@@ -50,7 +56,9 @@ RSpec.describe ProjectsController, type: :controller do
 
   describe 'POST #create' do
     context 'with valid attributes' do
-      let(:project_params) { { title: 'The Tumbler', description: 'All-terrain vehicle', status: Project::VALID_STATUSES.first } }
+      let(:project_params) do
+        { title: 'The Tumbler', description: 'All-terrain vehicle', status: Project::VALID_STATUSES.first }
+      end
 
       it 'creates a new project' do
         expect { post :create, params: { project: project_params } }

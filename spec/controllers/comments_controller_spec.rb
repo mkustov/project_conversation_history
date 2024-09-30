@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe CommentsController, type: :controller do
@@ -5,14 +7,16 @@ RSpec.describe CommentsController, type: :controller do
 
   describe 'POST #create' do
     let(:user) { User.create(email: 'gordon@blackmesa.com', password: 'HalfLife3') }
-    let(:project) { Project.create(title: 'The Crystal', description: 'Unknown origin', status: Project::VALID_STATUSES.first) }
+    let(:project) do
+      Project.create(title: 'The Crystal', description: 'Unknown origin', status: Project::VALID_STATUSES.first)
+    end
     let(:comment_params) { { body: 'This is a comment' } }
 
     subject { post :create, params: { project_id: project.id, comment: comment_params } }
 
     context 'when user is signed in' do
       before { sign_in(user) }
-      
+
       it 'creates a new comment' do
         expect { subject }
           .to change(Comment, :all)
@@ -23,8 +27,7 @@ RSpec.describe CommentsController, type: :controller do
                   project_id: project.id,
                   user_id: user.id
                 )
-              )
-            ) 
+              ))
       end
 
       it 'redirects to the project show page' do

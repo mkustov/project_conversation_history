@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class ProjectsController < ApplicationController
-  before_action :set_project, only: [:show, :update]
+  before_action :set_project, only: %i[show update]
 
   def index
     @projects = Project.all
@@ -11,7 +13,7 @@ class ProjectsController < ApplicationController
 
   def create
     @project = Project.new(project_params)
-    
+
     if @project.save
       redirect_to projects_path, notice: 'Project was successfully created.'
     else
@@ -23,8 +25,7 @@ class ProjectsController < ApplicationController
     @comment = Comment.new
   end
 
-  def update
-  end
+  def update; end
 
   private
 

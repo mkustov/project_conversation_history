@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 class Project < ApplicationRecord
   VALID_STATUSES = ['Ready', 'In Progress', 'Completed'].freeze
-  
+
   validates :title, presence: true
   validates :description, presence: true
 

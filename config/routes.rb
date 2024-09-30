@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Rails.application.routes.draw do
   get 'comments/create'
   devise_for :users
@@ -5,6 +7,6 @@ Rails.application.routes.draw do
   resources :projects, only: %i[index new create update show] do
     resources :comments, only: [:create]
   end
-  
-  root "projects#index"
+
+  root 'projects#index'
 end
