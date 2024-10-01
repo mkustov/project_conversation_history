@@ -1,9 +1,8 @@
-<span>
-  <b><%= comment.user.email %></b> posted at
+<span class="text-gray-700">
+  <b class="text-blue-600"><%= comment.user.email %></b> posted at
   <%= comment.created_at.strftime('%d %b. %Y %H:%M') %>
 </span>
 
-<p>
+<p class="text-gray-700">
   <%= comment.body %>
 </p>
-

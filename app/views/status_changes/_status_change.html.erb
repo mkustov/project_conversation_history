@@ -1,5 +1,4 @@
-<p>
-  <b><%= status_change.user.email %></b> updated status from <%= status_change.from_status %>
+<p class="text-gray-700">
+  <b class="text-blue-600"><%= status_change.user.email %></b> updated status from <%= status_change.from_status %>
   to <%= status_change.to_status %> at <%= status_change.created_at.strftime('%d %b. %Y %H:%M') %>
 </p>
-

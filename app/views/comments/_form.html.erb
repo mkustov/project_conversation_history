@@ -1,6 +1,8 @@
-<%= simple_form_for [@project, @comment] do |f| %>
+<%= simple_form_for [@project, @comment], html: { class: "space-y-4" } do |f| %>
   <%= f.error_notification %>
 
-  <%= f.input :body, label: 'Leave a comment' %>
-  <%= f.button :submit %>
+  <%= f.label :body, 'Leave a comment', class: "block text-sm font-medium text-gray-700" %>
+  <%= f.input_field :body, class: "mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" %>
+
+  <%= f.button :submit, class: "inline-block px-4 py-2 bg-orange-500 text-white font-semibold rounded hover:bg-orange-600" %>
 <% end %>
