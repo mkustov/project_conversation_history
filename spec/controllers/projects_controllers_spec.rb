@@ -49,7 +49,10 @@ RSpec.describe ProjectsController, type: :controller do
       context 'when project has comments and status updates' do
         let(:user) { User.create(email: 'gordon@blackmesa.com', password: 'HalfLife3') }
         let!(:comment) { Comment.create(body: 'This is a comment', user: user, project: project) }
-        let!(:status_change) { StatusChange.create(user: user, project: project, from_status: Project::VALID_STATUSES.first, to_status: Project::VALID_STATUSES.last) }
+        let!(:status_change) do
+          StatusChange.create(user: user, project: project, from_status: Project::VALID_STATUSES.first,
+                              to_status: Project::VALID_STATUSES.last)
+        end
 
         it 'renders project conversation items' do
           get :show, params: { id: project.id }
