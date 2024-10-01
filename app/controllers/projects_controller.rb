@@ -24,6 +24,7 @@ class ProjectsController < ApplicationController
 
   def show
     @comment = Comment.new
+    @conversation_items = @project.conversation_items
   end
 
   def update

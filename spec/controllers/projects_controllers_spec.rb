@@ -45,6 +45,20 @@ RSpec.describe ProjectsController, type: :controller do
         expect(response.body).to include(project.description)
         expect(response.body).to include(project.status)
       end
+
+      context 'when project has comments and status updates' do
+        let(:user) { User.create(email: 'gordon@blackmesa.com', password: 'HalfLife3') }
+        let!(:comment) { Comment.create(body: 'This is a comment', user: user, project: project) }
+        let!(:status_change) { StatusChange.create(user: user, project: project, from_status: Project::VALID_STATUSES.first, to_status: Project::VALID_STATUSES.last) }
+
+        it 'renders project conversation items' do
+          get :show, params: { id: project.id }
+          expect(response.body).to include("#{user.email}</b> posted at")
+          expect(response.body).to include(comment.body)
+          expect(response.body).to include("#{user.email}</b> updated status from #{status_change.from_status}")
+          expect(response.body).to include("to #{status_change.to_status} at ")
+        end
+      end
     end
 
     context 'when id is invalid' do

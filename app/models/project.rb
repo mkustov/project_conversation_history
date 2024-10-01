@@ -10,4 +10,8 @@ class Project < ApplicationRecord
 
   has_many :comments, dependent: :destroy
   has_many :status_changes, dependent: :destroy
+
+  def conversation_items
+    (comments + status_changes).sort_by(&:created_at)
+  end
 end
